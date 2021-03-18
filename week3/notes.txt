@@ -1,0 +1,63 @@
+Kézi tesztelés
+Automatikus tesztelés
+
+regression == visszafejlődés
+
+---
+
+assert Math.add(10, 100) == 110
+
+---
+
+Feature Test / Acceptance Test : Teljes rendszer, minél valódibb környezet, lassú
+Integration Test : a program külön komponenseit tesztelik együtt
+Unit Test : a program komponenseit tesztelik különállóan (Unit == Class vagy Függvény vagy metódus?)
+
+---
+
+Test Driven Development
+
+---
+
+https://docs.python.org/3/library/unittest.html
+
+---
+
+def strange_file_loader():
+    ...
+
+def strange_file_saver():
+    ...
+
+---
+import unittest
+from tempfile import TemporaryDirectory
+
+from system_under_test import strange_file_loader, strange_file_saver
+
+class TestStrangeFileHandler(unittest.TestCase):
+
+    def test_strange_file_roundtrip(self):
+        data = {"a": 1, "b": 2, "c": 3}
+        self.assertEquals(data, strange_file_loader(strange_file_saver(data)))
+
+    def test_strange_file_saver(self):
+        tempdir = TemporaryDirectory()
+        strange_file = tempdir.name + "/strangefile.strange"
+        data = {"a": 1, "b": 2, "c": 3}
+        expected = "a:1,b:2,c:3"
+        strange_file_saver(data, strange_file)
+        with open(strange_file) as f:
+            content = f.read()
+        self.assertEquals(expected, content)
+---
+// file1.c
+int main() {
+---
+// file2.c
+    return 1;
+}
+---
+// file3.c
+#include "file1.c"
+#include "file2.c"
