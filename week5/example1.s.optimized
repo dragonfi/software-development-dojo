@@ -1,0 +1,112 @@
+	.text
+	.file	"example1.c"
+	.globl	main                    # -- Begin function main
+	.p2align	4, 0x90
+	.type	main,@function
+main:                                   # @main
+	.cfi_startproc
+# %bb.0:
+	pushq	%rax
+	.cfi_def_cfa_offset 16
+	movl	a(%rip), %eax
+	cmpl	b(%rip), %eax
+	jbe	.LBB0_2
+# %bb.1:
+	movl	$.Lstr.7, %edi
+	jmp	.LBB0_3
+.LBB0_2:
+	movl	$.Lstr.4, %edi
+.LBB0_3:
+	callq	puts
+	movl	a(%rip), %eax
+	movslq	b(%rip), %rcx
+	cmpq	%rcx, %rax
+	jle	.LBB0_5
+# %bb.4:
+	movl	$.Lstr.7, %edi
+	jmp	.LBB0_6
+.LBB0_5:
+	movl	$.Lstr.4, %edi
+.LBB0_6:
+	callq	puts
+	movl	a(%rip), %eax
+	movslq	b(%rip), %rcx
+	cmpq	%rcx, %rax
+	jle	.LBB0_8
+# %bb.7:
+	movl	$.Lstr.7, %edi
+	jmp	.LBB0_9
+.LBB0_8:
+	movl	$.Lstr.4, %edi
+.LBB0_9:
+	callq	puts
+	movl	b(%rip), %esi
+	addl	a(%rip), %esi
+	movl	$.L.str.2, %edi
+	xorl	%eax, %eax
+	callq	printf
+	xorl	%eax, %eax
+	popq	%rcx
+	retq
+.Lfunc_end0:
+	.size	main, .Lfunc_end0-main
+	.cfi_endproc
+                                        # -- End function
+	.type	a,@object               # @a
+	.data
+	.globl	a
+	.p2align	2
+a:
+	.long	100                     # 0x64
+	.size	a, 4
+
+	.type	b,@object               # @b
+	.globl	b
+	.p2align	2
+b:
+	.long	4294967196              # 0xffffff9c
+	.size	b, 4
+
+	.type	c,@object               # @c
+	.globl	c
+	.p2align	2
+c:
+	.long	100                     # 0x64
+	.size	c, 4
+
+	.type	d,@object               # @d
+	.globl	d
+	.p2align	3
+d:
+	.quad	-1000                   # 0xfffffffffffffc18
+	.size	d, 8
+
+	.type	h,@object               # @h
+	.globl	h
+	.p2align	3
+h:
+	.quad	10                      # 0xa
+	.size	h, 8
+
+	.type	.L.str.2,@object        # @.str.2
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.L.str.2:
+	.asciz	"%d"
+	.size	.L.str.2, 3
+
+	.type	.Lstr.4,@object         # @str.4
+	.section	.rodata.str1.16,"aMS",@progbits,1
+	.p2align	4
+.Lstr.4:
+	.asciz	"100 is smaller than -100"
+	.size	.Lstr.4, 25
+
+	.type	.Lstr.7,@object         # @str.7
+	.p2align	4
+.Lstr.7:
+	.asciz	"100 is bigger than -100"
+	.size	.Lstr.7, 24
+
+
+	.ident	"clang version 6.0.0-1ubuntu2 (tags/RELEASE_600/final)"
+	.section	".note.GNU-stack","",@progbits

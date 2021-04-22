@@ -1,0 +1,9 @@
+
+
+
+struct Item<A> {
+    value: A;
+    next: *Item<A>;
+}
+
+A head(Item<A>);
